@@ -1,0 +1,20 @@
+# Free plan: no persistent disk, so data/db.json resets whenever the
+# service redeploys or spins down. Fine for testing. If you want chat
+# history and accounts to survive restarts, switch plan to "starter"
+# below and uncomment the disk block.
+services:
+  - type: web
+    name: nightshift-irc
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: TRUST_PROXY
+        value: "1"
+      - key: ADMIN_USERS
+        sync: false
+    # disk:
+    #   name: nightshift-data
+    #   mountPath: /opt/render/project/src/data
+    #   sizeGB: 1
